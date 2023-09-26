@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>LuckyLand</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                height: 100vh;
+                background-color: #2e2e2e;
+                color: white;
+            }
+
+            #output {
+                position: relative;
+                width: 100%;
+            }
+
+            #infoRow {
+                display: flex;
+                justify-content: space-around; /* Distribute items evenly */
+                width: 100%;
+                margin-top: 80px; /* Adjust based on #optimalAction height to avoid overlap */
+            }
+
+            #infoRow p {
+                flex: 1; /* Makes sure each column takes equal space */
+                text-align: center; /* Center the text in each column */
+                font-size: 1.5em; /* Increase the font size. Adjust as needed. */
+            }
+
+            #statsRow {
+                display: flex;
+                justify-content: space-around;
+                width: 100%;
+                font-size: 1.5em; /* Adjust as needed */
+                margin-top: 20px;
+            }
+
+            #optimalAction {
+                position: absolute;
+                top: 0;
+                padding: 10px;
+                border-radius: 0 0 10px 10px;
+                font-size: 3em;
+                min-width: 150px; /* This value ensures that even 'Hit' has a decent width */
+                text-align: center; /* Centers the text within the minimum width */
+            }
+
+            /* Additional CSS for positioning the actions */
+            .action-left {
+                left: 0;
+            }
+
+            .action-right {
+                right: 0;
+            }
+
+            .action-right-offset {
+                right: 150px; /* You can adjust this value to control the offset */
+            }
+            .action-left-offset {
+                left: 150px; /* You can adjust this value to control the offset */
+            }
+            #dealerCard,
+            #playerKey {
+                color: white;
+            }
+
+            #dealerCard span,
+            #playerKey span {
+                font-weight: bold;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="output">
+            <div id="infoRow">
+                <p id="sweepsRemaining">Unwashed Balance Remaining: <span></span></p>
+                <p id="dealerCard">Dealer Hand: <span></span></p>
+                <p id="playerKey">Player Hand: <span></span></p>
+            </div>
+            <div id="statsRow">
+                <p id="amountPlayed">Amount Washed: <span></span></p>
+                <p id="amountPerHour">Amount Washed Per Hour: <span></span></p>
+                <p id="estimatedTime">
+                    Estimated Time To Wash: <span></span>
+                </p>
+            </div>
+            <p><span id="optimalAction"></span></p>
+        </div>
+
+        <script>
+            const { ipcRenderer } = require('electron');
+
+            ipcRenderer.on('optimalAction', (event, data) => {
+                console.log(data);
+                const actionElement = document.getElementById('optimalAction');
+                const dealerCardElement = document.getElementById('dealerCard');
+                const playerKeyElement = document.getElementById('playerKey');
+                const sweepsRemainingElement =
+                    document.getElementById('sweepsRemaining');
+                const amountPlayedElement = document
+                    .getElementById('amountPlayed')
+                    .querySelector('span');
+                const amountPerHourElement = document
+                    .getElementById('amountPerHour')
+                    .querySelector('span');
+                const estimatedTimeElement = document
+                    .getElementById('estimatedTime')
+                    .querySelector('span');
+
+                let backgroundColor;
+                let textColor;
+                switch (data.optimalAction) {
+                    case 'H':
+                        actionElement.textContent = 'Hit';
+                        backgroundColor = '#FFD700';
+                        textColor = 'black';
+                        actionElement.className = 'action-right';
+                        break;
+                    case 'S':
+                        actionElement.textContent = 'Stand';
+                        backgroundColor = '#e50047';
+                        textColor = 'white';
+                        actionElement.className = 'action-left';
+                        break;
+                    case 'P':
+                        actionElement.textContent = 'Split';
+                        backgroundColor = '#FF8C00';
+                        textColor = 'black';
+                        actionElement.className = 'action-left-offset';
+                        break;
+                    case 'D':
+                        actionElement.textContent = 'Double';
+                        backgroundColor = '#008000';
+                        textColor = 'white';
+                        actionElement.className = 'action-right-offset';
+                        break;
+                    default:
+                        actionElement.textContent = 'Repeat';
+                        backgroundColor = '#0000CD';
+                        textColor = 'white';
+                        actionElement.className = 'action-right';
+                        break;
+                }
+                actionElement.style.backgroundColor = backgroundColor;
+                actionElement.style.color = textColor;
+
+                dealerCardElement.querySelector('span').textContent =
+                    data.dealerCard;
+                dealerCardElement.querySelector('span').style.color = '#FF6347';
+                playerKeyElement.querySelector('span').textContent =
+                    data.playerKey;
+                playerKeyElement.querySelector('span').style.color = '#32CD32';
+                sweepsRemainingElement.querySelector('span').textContent =
+                    data.sweepsRemaining / 100;
+                sweepsRemainingElement.querySelector('span').style.color =
+                    '#32CD32';
+                amountPlayedElement.textContent = (
+                    data.amountPlayed / 100
+                ).toFixed(2);
+                amountPlayedElement.style.color = '#FF8C00';
+                amountPerHourElement.textContent = (
+                    data.amountPlayedPerHour / 100
+                ).toFixed(2);
+                amountPerHourElement.style.color = '#FF8C00';
+                let estimatedHours =
+                    data.sweepsRemaining / data.amountPlayedPerHour;
+                estimatedTimeElement.textContent = `${(
+                    estimatedHours
+                ).toFixed(2)} hours`;
+                estimatedTimeElement.style.color = '#0000CD';
+            });
+        </script>
+    </body>
+</html>
