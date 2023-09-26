@@ -1,6 +1,8 @@
 # AutomaticBlackJack
 ![Example Screenshot](Software.PNG)
-JS app that displays visual indicator for best action to take. Currently supports Chumba Purple BJ and LuckyLand BJ. Uses the logic from the strategy chart and Chrome remote debugger to analyze network requests, track the current Game's State, and displays the optimal action to take for perfect strategy. Also shows some analytics functions at the bottom.
+
+# What is this?
+JS app that displays visual indicator for best action to take based on the dealer hand and your hands. Currently supports Chumba Purple BJ and LuckyLand BJ. Uses the logic from the strategy chart and Chrome remote debugger to analyze network requests, track the current Game's State, and displays the optimal action to take for perfect strategy. Supports splitting, multiple hands, doubles, etc. Also shows some analytics functions at the bottom.
 
 # How does this work?
 You just launch your chrome with an extra flag to enable remote debugging. This basically makes the dev tools available to other programs on your computer. I then created a custom program that attaches to your dev tools and reads the network data to keep track of your game state, and then implemented the logic from the strategy charts to display a visual indicator for the appropriate action based on the game state. 
@@ -18,7 +20,9 @@ You will need to download a code editor (I personally use VS Code: https://code.
 
 TODO: Come back and Check Above ^
 
-### Clone this project (easiest way is just click the Green Clone Button then "Open with Visual Studio")
+### Clone this project 
+(easiest way is just click the Green Clone Button then "Open with Visual Studio")
+
 Open a VS Code Integrated Terminal after opening the project, and run npm install.
 
 TODO: Might need instructions for configuring VS Code Extensions/Environments/Interpreters?
@@ -56,17 +60,18 @@ Launch the Code while on the main lobby page at Chumba, then open Purple BlackJa
 ### LuckyLand:
 After Dealer BlackJack, it displays Hit instead of Repeat. It also doesn't start showing the correct values for Time, Bets Per hour, etc. until two wins. 
 
-Since these are super minor bugs they are low priority but I will fix them eventually when I get time. The code is also pretty rough with a lot of duplicationss. This is because it was initially designed only for Chumba but LuckyLand had a much different process for how the game works, and adapting the code for both sites was challenging, but now that the code works, it works.
+Since these are super minor bugs they are low priority but I will fix them eventually when I get time. The code is also pretty rough with a lot of duplicationss. This is because it was initially designed only for Chumba but LuckyLand had a **much** different process for how the game works with its state management and network requests and I was too lazy to make the code modular and efficient. But since this code works and I'm working on many other important automations that everyone in the group can take advantage of, these problems are low hanging fruit and this gets the job done.
+
 
 # FAQ
 ### Are you going to make this fully automated for playing too?
-Maybe in the future, but as of now im leaning towards that not being worth the risk. Automation most likely breaks TOS and is bannable. While we can read the data with a 100% guarantee of being undetectable, actually interacting with the browser will always carry a possiblity of detection (albeit very small one). But given the size of the deposit's we're all putting on these sites its a risk im not willing to take.
+Maybe in the future, but as of now im leaning towards that not being worth the risk. Automation most likely breaks TOS and is bannable. While we can **read** the data with a 100% guarantee of that being undetectable, **_actually interacting with the browser_** will always carry a possiblity of detection (albeit very small one). But given the size of the deposit's we're all putting on these sites its a risk im not willing to take.
 
 ### If I already memorized the chart is this program useless?
-Besides the added benefit of not having to actually play/follow the game (which I find super boring and tedious), since the program tracks the game state through network requests it has access to the hand data before your screen animations complete, so its guaranteed to speed up your game (you will already see the correct action to take before the hands are even finished being dealt). 
-It can also prevent making any mistakes, which is useful considering even a single mistake can heavily effect your sessions RTP and the profitability of this method. 
+Besides the added benefit of not having to actually play/follow the game (which I find super boring and tedious), since the program **tracks the game state through network requests** it has access to the hand data **before** your screen animations complete, so **_its guaranteed to speed up your game_** (you will already see the correct action to take before the hands even finish dealing). 
+It can also help prevent you from making any mistakes, very useful considering that even a single mistake can heavily effect your sessions RTP and the profitability of this method. 
 
-### If you've found any kind of bug, have trouble getting it running, or have an interesting idea to add to it let me know in discord @tracer6136 (Camheff)
+### If you've found any kind of bug, have trouble getting it running, or have an interesting idea to add to it let me know in discord Camheff (@tracer6136)
 
 # Sources For Tables:
 Chumba Purple:
