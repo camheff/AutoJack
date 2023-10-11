@@ -41,15 +41,15 @@ Click Yes, I trust the authors.
 
 ### AFTER Cloning:
 
-Open a VS Code Integrated Terminal by selecting **Terminal** then **New Terminal** (On the Bar on the Top Left with File, Edit, etc.)
+Open a VS Code Integrated Terminal by selecting ***Terminal*** then ***New Terminal*** (On the Bar on the Top Left with File, Edit, etc.)
 
-Run the command: **npm install**
+Run the command: ***npm install***
 
-**If you get an error try running npm install a second time**
+***If you get an error try running npm install a second time***
 
 This will install dependencies for the project so it can run. 
 
-**The project is now installed, you just need to configure Chrome so it can be accessed by this code**.
+***The project is now installed, you just need to configure Chrome so it can be accessed by this code***.
 
 
 ### Setting up Chrome:
@@ -59,7 +59,7 @@ So it should look like:
 
 "C:\Program Files\Google\Chrome\Application\chrome_dev.exe" --remote-debugging-port=9222 
 
-You will probably need to either turn off your Firewall or add an exception for this Chrome in your firewall rules, otherwise it will **probably block the remote debugger**.
+You will probably need to either turn off your Firewall or add an exception for this Chrome in your firewall rules, otherwise it will ***probably block the remote debugger***.
 
 To ensure this is working, launch the Chrome with this short cut, and open a command prompt (search command prompt in the Windows Start Menu) then run
 
@@ -76,9 +76,9 @@ If you dont want to make a shortcut, or this doesn't make sense, you could alter
 ### Running it:
 Back in your VS Code window, after running npm install, you can 
 
-run: **npm run start:luckyland**    
+run: ***npm run start:luckyland***    
 
-or run: **npm run start:chumba**    
+or run: ***npm run start:chumba***    
 
 to launch the program, you need to have a remote debugger window opened at either chumba or luckyland before running the command. Only have **one single window** opened, **at the sites lobby page** when launching.
 
@@ -94,15 +94,15 @@ Launch the Code while on the main lobby page at Chumba, then open Purple BlackJa
 ### LuckyLand:
 After Dealer BlackJack, it displays Hit instead of Repeat. It also doesn't start showing the correct values for Time, Bets Per hour, etc. until two wins. 
 
-Since these are super minor bugs they are low priority but I will fix them eventually when I get time. The code is also pretty rough with a lot of duplicationss. This is because it was initially designed only for Chumba but LuckyLand had a **much** different process for how the game works with its state management and network requests and I was too lazy to make the code modular and efficient. But since this code works and I'm working on many other important automations that everyone in the group can take advantage of, these problems are low hanging fruit and this gets the job done.
+Since these are super minor bugs they are low priority but I will fix them eventually when I get time. The code is also pretty rough with a lot of duplicationss. This is because it was initially designed only for Chumba but LuckyLand had a ***much*** different process for how the game works with its state management and network requests and I was too lazy to make the code modular and efficient. But since this code works and I'm working on many other important automations that everyone in the group can take advantage of, these problems are low hanging fruit and this gets the job done.
 
 
 # FAQ
 ### Are you going to make this fully automated for playing too?
-Maybe in the future, but as of now im leaning towards that not being worth the risk. Automation most likely breaks TOS and is bannable. While we can **read** the data with a 100% guarantee of that being undetectable, **_actually interacting with the browser_** will always carry a possiblity of detection (albeit very small one). But given the size of the deposit's we're all putting on these sites its a risk im not willing to take.
+Maybe in the future, but as of now im leaning towards that not being worth the risk. Automation most likely breaks TOS and is bannable. While we can ***read*** the data with a 100% guarantee of that being undetectable, **_actually interacting with the browser_** will always carry a possiblity of detection (albeit very small one). But given the size of the deposit's we're all putting on these sites its a risk im not willing to take.
 
 ### If I already memorized the chart is this program useless?
-Besides the added benefit of not having to actually play/follow the game (which I find super boring and tedious), since the program **tracks the game state through network requests** it has access to the hand data **before** your screen animations complete, so **_its guaranteed to speed up your game_** (you will already see the correct action to take before the hands even finish dealing). 
+Besides the added benefit of not having to actually play/follow the game (which I find super boring and tedious), since the program ***tracks the game state through network requests*** it has access to the hand data ***before*** your screen animations complete, so **_its guaranteed to speed up your game_** (you will already see the correct action to take before the hands even finish dealing). 
 It can also help prevent you from making any mistakes, very useful considering that even a single mistake can heavily effect your sessions RTP and the profitability of this method. 
 
 ### If you've found any kind of bug, have trouble getting it running, or have an interesting idea to add to it let me know in discord Camheff (@tracer6136)
