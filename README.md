@@ -15,17 +15,40 @@ I highly recommend to compare the Dealer/PlayerHands detected to the Actual Game
 
 
 # Instructions
-### If you've never touched a line of code before: 
-You will need to download a code editor (I personally use VS Code: https://code.visualstudio.com/ ), Node JS: https://nodejs.org/en as well as git: https://gitforwindows.org/
+### If you've never touched a line of code before, first do this 
 
-TODO: Come back and Check Above ^
+You will need to download a code editor (I personally use VS Code, available here: https://code.visualstudio.com/ )
 
-### Clone this project 
-(easiest way is just click the Green Clone Button then "Open with Visual Studio")
+Install nodejs: Node JS: https://nodejs.org/en
 
-Open a VS Code Integrated Terminal after opening the project, and run npm install.
+When installing nodejs make sure to check "Automatically install the necessary tools. Note this will install Chocolatey..." on Windows.
 
-TODO: Might need instructions for configuring VS Code Extensions/Environments/Interpreters?
+Install git, dont need to change anything from default in the installer unless you know what your doing, available here: https://gitforwindows.org/
+
+### Clone (download) this project 
+
+(Easy Way)
+
+Go back to the github page for this project, and click the green Code button, then copy the link it has under HTTPS ( its https://github.com/camheff/AutomaticBlackJack.git )
+
+Open VS Code, on the left sidebar, click the Explorer button (just above the Magnifying glass), then click the blue "Clone Repository" button. (If you dont see this, try exiting and reopening VS Code).
+
+Paste this link into the little bar at the top of your screen for Clone from GitHub, then click "Clone from ...."
+
+After selecting a location to download it to, once the download completes click "Open" on the popup.
+
+Click Yes, I trust the authors.
+
+### AFTER Cloning:
+
+Open a VS Code Integrated Terminal by selecting Terminal then New Terminal (On the Bar on the Top Left with File, Edit, etc.)
+
+Run the command: npm install
+
+If you get an error try running npm install a second time
+
+This will install dependencies for the project so it can run. The project is now installed, you just need to configure Chrome so it can be accessed by this code.
+
 
 ### Setting up Chrome:
 Find or create a shortcut to your Google Chrome, then right click it, select "Properties", and add " --remote-debugging-port=9222" (without the quotes, with the space in front) to the end target field.
@@ -46,9 +69,9 @@ This should display a line like
 If it shows nothing, its likely a firewall issue. If it shows a bunch of entries and you cant connect program instance to it, try restarting your PC and make sure you launch the Chrome with remote debugging before any other Chrome instance. If you see a similar line your Chrome is setup correctly.
 
 ### Running it:
-Back in your VS Code window, after running npm install, you can run "npm run start:luckyland" or "npm run start:chumba" to launch the program, you need to have a remote debugger window opened at either chumba or luckyland before running the command. Only have one single window opened, at the sites lobby page when launching.
+Back in your VS Code window, after running npm install, you can run: npm run start:luckyland    or run: npm run start:chumba    to launch the program, you need to have a remote debugger window opened at either chumba or luckyland before running the command. Only have one single window opened, at the sites lobby page when launching.
 
-And that should be it. I would recommend resizing the program window so that it sits right below the game window. I made it so the indicator for what action to take roughly lines up with button position in the gamee.
+And that should be it. I would recommend resizing the program window so that it sits right below the game window. I made it so the indicator for what action to take roughly lines up with button position in the game. Resize the electron window as you need in order to have the button positions line up correctly.
 
 # Weird Things to Note about Each Site
 ### Both:
@@ -79,3 +102,11 @@ https://www.beatingbonuses.com/bjstrategy.php?decks2=6&h17=stand&doubleon2=9to11
 
 LuckyLand:
 https://www.beatingbonuses.com/bjstrategy.php?decks2=6&h17=stand&doubleon2=any2cards&das2=on&peek2=ace&surrender2=no&charlie2=no&resplits2=3&shuffle=0&bj=3to2&opt2=1&btn2=Generate+Strategy
+
+# Sponsorships/Donations
+
+This code is open source and 100% free for anyone to use, but it did take me a lot of effort and I spent a few weeks researching and working on the best way to implement something like this for everyone's benefit while I could have just been doing the 5% method during that time. If you like the software and find it useful and want to show your  appreciation the Sponsors button at the top of the Github page is the best way to do so, and I would greatly appreciate any support. Im not expecting to make anything off this but any Sponsor money I plan on using in opening my SEP IRA's, and knowing theres people out there enjoy my work enough to be willing to sponsor it would really be a dream come true.
+
+### OmniTrader Early Access, the Automated RSA CLI
+
+Some of the Sponsorship tiers are also eligible to get **early access to an RSA CLI program** I've been working on called OmniTrader, where the goal is to **automate RSA trading** so you can place your Buy's and Sell's accross ALL brokers with a single command rather than spending an hour inputting orders. Currently it supports TastyTrade and Tradier, with Wells Fargo, Vanguard, and others coming very soon. Its currently an active work in progress and I plan to add just about every broker used for RSA to the Project starting with the slowest and most annoying brokers to trade in first.
