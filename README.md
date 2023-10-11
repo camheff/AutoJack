@@ -41,22 +41,25 @@ Click Yes, I trust the authors.
 
 ### AFTER Cloning:
 
-Open a VS Code Integrated Terminal by selecting Terminal then New Terminal (On the Bar on the Top Left with File, Edit, etc.)
+Open a VS Code Integrated Terminal by selecting **Terminal** then **New Terminal** (On the Bar on the Top Left with File, Edit, etc.)
 
-Run the command: npm install
+Run the command: **npm install**
 
-If you get an error try running npm install a second time
+**If you get an error try running npm install a second time**
 
-This will install dependencies for the project so it can run. The project is now installed, you just need to configure Chrome so it can be accessed by this code.
+This will install dependencies for the project so it can run. 
+
+**The project is now installed, you just need to configure Chrome so it can be accessed by this code**.
 
 
 ### Setting up Chrome:
 Find or create a shortcut to your Google Chrome, then right click it, select "Properties", and add " --remote-debugging-port=9222" (without the quotes, with the space in front) to the end target field.
 
 So it should look like:  
+
 "C:\Program Files\Google\Chrome\Application\chrome_dev.exe" --remote-debugging-port=9222 
 
-You will probably need to either turn off your Firewall or add an exception for this Chrome in your firewall rules, otherwise it will probably block the remote debugger.
+You will probably need to either turn off your Firewall or add an exception for this Chrome in your firewall rules, otherwise it will **probably block the remote debugger**.
 
 To ensure this is working, launch the Chrome with this short cut, and open a command prompt (search command prompt in the Windows Start Menu) then run
 
@@ -68,10 +71,18 @@ This should display a line like
   
 If it shows nothing, its likely a firewall issue. If it shows a bunch of entries and you cant connect program instance to it, try restarting your PC and make sure you launch the Chrome with remote debugging before any other Chrome instance. If you see a similar line your Chrome is setup correctly.
 
-### Running it:
-Back in your VS Code window, after running npm install, you can run: npm run start:luckyland    or run: npm run start:chumba    to launch the program, you need to have a remote debugger window opened at either chumba or luckyland before running the command. Only have one single window opened, at the sites lobby page when launching.
+If you dont want to make a shortcut, or this doesn't make sense, you could alternatively just launch it like this: https://www.youtube.com/watch?v=LEJX645aeFU&t=3s&ab_channel=AutoTest
 
-And that should be it. I would recommend resizing the program window so that it sits right below the game window. I made it so the indicator for what action to take roughly lines up with button position in the game. Resize the electron window as you need in order to have the button positions line up correctly.
+### Running it:
+Back in your VS Code window, after running npm install, you can 
+
+run: **npm run start:luckyland**    
+
+or run: **npm run start:chumba**    
+
+to launch the program, you need to have a remote debugger window opened at either chumba or luckyland before running the command. Only have **one single window** opened, **at the sites lobby page** when launching.
+
+And that should be it. I would recommend **resizing the program window so that it sits right below the game window**. I made it so the indicator for what action to take roughly lines up with button position in the game. Resize the electron window as you need in order to have the button positions line up correctly.
 
 # Weird Things to Note about Each Site
 ### Both:
