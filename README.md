@@ -1,6 +1,30 @@
 # AutomaticBlackJack
 ![Example Screenshot](Software.PNG)
 
+# Updates in V2.0:
+
+Added new mode: ***ChadMode***. This allows you to play on ***BOTH*** Chumba AND LuckyLand at the same time. Double your wash rate like a true degenerate.
+
+Fixed LuckyLand Chart logic to use corrected Chat.
+
+Updated Optimal Action Indicator to match colors of LuckyLand's Buttons
+
+Fixed bugs displaying double when that is not possible, will now show correct "Hit" or "Stand" instead.
+
+Fixed bug to correctly show repeat when dealer has Black Jack.
+
+All known bug's should now be fixed. 
+
+To update your code, just run:
+
+***git pull***
+
+then run:
+
+***npm install***
+
+And thats it!
+
 # What is this?
 JS app that displays visual indicator for best action to take based on the dealer hand and your hands. Currently supports Chumba Purple BJ and LuckyLand BJ. Uses the logic from the strategy chart and Chrome remote debugger to analyze network requests, track the current Game's State, and displays the optimal action to take for perfect strategy. Supports splitting, multiple hands, doubles, etc. Also shows some analytics functions at the bottom.
 
@@ -80,16 +104,24 @@ run: ***npm run start:luckyland***
 
 or run: ***npm run start:chumba***    
 
+### NEW MODE ADDED:
+***NEW***
+Or If you're feeling crazy, run: ***npm run start:ChadMode***   
+
+ChadMode allows you to play on ***BOTH*** Chumba and LuckyLand at the same time, greatly increasing your hourly wash rate. Just have two chrome tabs opened, with one at Chumba Purple BJ and one at LuckyLand BJ.
+***END NEW***
+
 to launch the program, you need to have a remote debugger window opened at either chumba or luckyland before running the command. Only have **one single window** opened, **at the sites lobby page** when launching.
 
 And that should be it. I would recommend **resizing the program window so that it sits right below the game window**. I made it so the indicator for what action to take roughly lines up with button position in the game. Resize the electron window as you need in order to have the button positions line up correctly.
 
 # Weird Things to Note about Each Site
 ### Both:
-For some reason, when you initially connect the program to your Chrome Debugger, it resizes the Chrome Window. After some research, it appears this is a bug with Puppeteer itself (so its not something I can fix sadly), but the quick work around to fix your window is just right click on the window, select Inspect, you should now see DevTools Pop Up. On the very top left of the screen, to the left of "Elements" click the little Laptop/Phone Icon Twice (Toggle device toolbar) or hit "CTRL + SHIFT + M" if you cant find it. That should fix the resolution.
+~~For some reason, when you initially connect the program to your Chrome Debugger, it resizes the Chrome Window. After some research, it appears this is a bug with Puppeteer itself (so its not something I can fix sadly), but the quick work around to fix your window is just right click on the window, select Inspect, you should now see DevTools Pop Up. On the very top left of the screen, to the left of "Elements" click the little Laptop/Phone Icon Twice (Toggle device toolbar) or hit "CTRL + SHIFT + M" if you cant find it. That should fix the resolution.~~ Fixed in latest Version 2.0
 
 ### Chumba:
 Launch the Code while on the main lobby page at Chumba, then open Purple BlackJack. You need to click the Sweeps Coins thing at the top atleast once (so it displays your Balance and Redeemable Balance) for the program to know those values and make the appropriate calculations for analytics.
+***NEW*** Added a reminder to the UI if you haven't clicked this when playing
 
 ### LuckyLand:
 After Dealer BlackJack, it displays Hit instead of Repeat. It also doesn't start showing the correct values for Time, Bets Per hour, etc. until two wins. 
