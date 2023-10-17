@@ -5,6 +5,8 @@
 
 Added new mode: ***ChadMode***. This allows you to play on ***BOTH*** Chumba AND LuckyLand at the same time. Double your wash rate like a true degenerate.
 
+Fixed the view resizing bug. After running the code you should no longer have to open the dev tools to manually fix this.
+
 Fixed LuckyLand Chart logic to use corrected Chat.
 
 Updated Optimal Action Indicator to match colors of LuckyLand's Buttons
