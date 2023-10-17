@@ -26,7 +26,7 @@ const strategy_chart_luckyland = {
         A4: 'H',
         A5: 'H',
         A6: 'H',
-        A7: 'S',
+        A7: 'Ds',
         A8: 'S',
         A9: 'S',
         22: 'P',
@@ -60,7 +60,7 @@ const strategy_chart_luckyland = {
         A4: 'H',
         A5: 'H',
         A6: 'D',
-        A7: 'D',
+        A7: 'Ds',
         A8: 'S',
         A9: 'S',
         22: 'P',
@@ -94,7 +94,7 @@ const strategy_chart_luckyland = {
         A4: 'D',
         A5: 'D',
         A6: 'D',
-        A7: 'D',
+        A7: 'Ds',
         A8: 'S',
         A9: 'S',
         22: 'P',
@@ -128,7 +128,7 @@ const strategy_chart_luckyland = {
         A4: 'D',
         A5: 'D',
         A6: 'D',
-        A7: 'D',
+        A7: 'Ds',
         A8: 'S',
         A9: 'S',
         22: 'P',
@@ -162,8 +162,8 @@ const strategy_chart_luckyland = {
         A4: 'D',
         A5: 'D',
         A6: 'D',
-        A7: 'D',
-        A8: 'S',
+        A7: 'Ds',
+        A8: 'Ds',
         A9: 'S',
         22: 'P',
         33: 'P',
@@ -282,7 +282,7 @@ const strategy_chart_luckyland = {
         8: 'H',
         9: 'H',
         10: 'H',
-        11: 'H',
+        11: 'D',
         12: 'H',
         13: 'H',
         14: 'H',
@@ -307,7 +307,7 @@ const strategy_chart_luckyland = {
         55: 'H',
         66: 'H',
         77: 'H',
-        88: 'H',
+        88: 'P',
         99: 'S',
         20: 'S',
         AA: 'P',
@@ -316,7 +316,7 @@ const strategy_chart_luckyland = {
         8: 'H',
         9: 'H',
         10: 'H',
-        11: 'H',
+        11: 'D',
         12: 'H',
         13: 'H',
         14: 'H',
@@ -483,8 +483,6 @@ class GameState {
             }
         } else if (responseBody.updatedSeat) {
             // Split
-            // A split action has occurred
-
             const seatIndex = responseBody.updatedSeat.hands[0].seatIndex; // Get the seat index from one of the new hands
 
             // Update the seats structure with the new hands after the split, and filter card values
@@ -551,6 +549,7 @@ function createWindow() {
     mainWindow.loadFile('LuckyLand.html');
 }
 
+app.disableHardwareAcceleration();
 app.whenReady().then(createWindow).then(run);
 
 app.on('window-all-closed', () => {
@@ -596,10 +595,9 @@ function getOptimalActionLuckyLand(gameState, strategyChart) {
             0,
             gameState.sweepsRemaining,
             gameState.amountPlayed,
-            amountPlayedPerHour
+            amountPlayedPerHour 
         );
     } else {
-        //if (!gameState.allHandsCompleted) {
         const symbolToValue = {
             2: 2,
             3: 3,
@@ -615,11 +613,15 @@ function getOptimalActionLuckyLand(gameState, strategyChart) {
             K: 10,
             A: 'A',
         };
-        //const dealerCard = symbolToValue[dealerCardSymbol];
 
-        const dealerCard = symbolToValue[gameState.dealerHand]; // already the card's rank
+        const dealerCard = symbolToValue[gameState.dealerHand];
         log('dealerCard:');
         log(dealerCard);
+
+        // Dealer Black Jack
+        if (gameState.dealerHand.length > 1) {
+            return 'Repeat';
+        }
 
         const playerHand =
             gameState.playerHands[gameState.activeSeatIndex][
@@ -633,6 +635,13 @@ function getOptimalActionLuckyLand(gameState, strategyChart) {
 
         // get the optimal strategy for the player's current hand against the dealer's face-up card
         strategy = strategyChart[dealerCard][playerKey];
+
+        // If strategy is 'Double else Stand' and player doesn't have exactly 2 cards, update strategy to Stand
+        if (strategy === 'Ds' && playerHand.length !== 2) {
+            strategy = 'S';
+        } else if (strategy === 'Ds' && playerHand.length == 2) {
+            strategy = 'D';
+        } else
 
         // Always stand above 17
         if (
@@ -655,13 +664,11 @@ function getOptimalActionLuckyLand(gameState, strategyChart) {
         );
     }
     log('Leaving getOptimalActionLuckyLand');
-
     return strategy;
 }
 
 function getPlayerKeyLuckyLand(hand) {
     log('Entering getPlayerKeyLuckyLand');
-    // Note: The symbol to value mapping is not needed anymore, as cards are now ranks directly.
     const symbolToValue = {
         2: 2,
         3: 3,
@@ -677,7 +684,6 @@ function getPlayerKeyLuckyLand(hand) {
         K: 10,
         A: 1,
     };
-    log('GetPlayerKeyLuckyLand');
     const values = hand.map((card) => symbolToValue[card]);
     log(values);
     let key = '';
@@ -732,6 +738,16 @@ async function run() {
     if (!targetPage) {
         throw new Error('Target page not found');
     }
+
+    // Fix the viewport resizing bug from Puppeteer by toggling it on and off
+    const client = await targetPage.target().createCDPSession();
+    await client.send('Emulation.setDeviceMetricsOverride', {
+        width: 800, 
+        height: 600,
+        deviceScaleFactor: 1,
+        mobile: true,
+    });
+    await client.send('Emulation.clearDeviceMetricsOverride');
 
     targetPage.on('response', async (response) => {
         if (

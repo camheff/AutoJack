@@ -112,7 +112,7 @@ Chumba Purple:
 https://www.beatingbonuses.com/bjstrategy.php?decks2=6&h17=stand&doubleon2=9to11s&das2=on&peek2=off&surrender2=no&charlie2=no&dsa2=on&resplits2=4&resplitA=0&shuffle=0&bj=3to2&opt2=2&btn2=Generate+Strategy
 
 LuckyLand:
-https://www.beatingbonuses.com/bjstrategy.php?decks2=6&h17=stand&doubleon2=any2cards&das2=on&peek2=ace&surrender2=no&charlie2=no&resplits2=3&shuffle=0&bj=3to2&opt2=1&btn2=Generate+Strategy
+https://www.beatingbonuses.com/bjstrategy.php?decks2=6&h17=hit&doubleon2=any2cards&das2=on&peek2=on&surrender2=no&charlie2=no&resplits2=3&shuffle=0&bj=3to2&opt2=1&btn2=Generate+Strategy
 
 # Sponsorships/Donations
 

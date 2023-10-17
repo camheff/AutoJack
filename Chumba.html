@@ -182,6 +182,9 @@
                     estimatedHours
                 ).toFixed(2)} hours`;
                 estimatedTimeElement.style.color = '#0000CD';
+                if ( isNaN(estimatedHours)) {
+                    estimatedTimeElement.textContent = 'Click the SC Balance to initialize Analytics';
+                }
             });
         </script>
     </body>

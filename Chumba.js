@@ -426,6 +426,7 @@ function createWindow() {
     mainWindow.loadFile('Chumba.html');
 }
 
+app.disableHardwareAcceleration();
 app.whenReady().then(createWindow).then(run);
 
 app.on('window-all-closed', () => {
@@ -490,6 +491,10 @@ function getOptimalAction(gameState, strategyChart) {
 
         // get the optimal strategy for the player's current hand against the dealer's face-up card
         strategy = strategyChart[dealerCard][playerKey];
+
+        if (strategy === 'D' && playerHand.length !== 2) {
+            strategy = 'H';
+        }
 
         // Always stand above 17
         if (
@@ -593,6 +598,16 @@ async function run() {
     if (!targetPage) {
         throw new Error('Target page not found');
     }
+
+    // Fix the viewport resizing bug from Puppeteer by toggling it on and off
+    const client = await targetPage.target().createCDPSession();
+    await client.send('Emulation.setDeviceMetricsOverride', {
+        width: 800, 
+        height: 600,
+        deviceScaleFactor: 1,
+        mobile: true,
+    });
+    await client.send('Emulation.clearDeviceMetricsOverride');
 
     targetPage.on('response', async (response) => {
         // Chumba Requests
