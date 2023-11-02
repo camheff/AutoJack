@@ -410,7 +410,11 @@ class GameState {
 
     updateForLuckyLand(responseBody) {
         log('Entering UpdateForLuckyLand');
-        if (responseBody.clientGame && responseBody.finalAction) {
+        if (
+            (responseBody.clientGame && responseBody.finalAction) ||
+            (responseBody.clientGame &&
+                responseBody.clientGame.gamePhase === 'Completed')
+        ) {
             this.allHandsCompleted = true;
         } else if (responseBody.clientGame) {
             // Game Start
@@ -536,10 +540,13 @@ function extractCardRank(card) {
     return card.slice(-1);
 }
 
+app.disableHardwareAcceleration();
+
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width: 1200,
-        height: 600,
+        width: 800,
+        height: 200,
+        frame: process.env.LEGACY_MODE === 'true',
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -547,9 +554,10 @@ function createWindow() {
     });
 
     mainWindow.loadFile('LuckyLand.html');
+    mainWindow.webContents.on('did-finish-load', () => {
+        mainWindow.webContents.setZoomFactor(0.75);
+    });
 }
-
-app.disableHardwareAcceleration();
 app.whenReady().then(createWindow).then(run);
 
 app.on('window-all-closed', () => {
@@ -572,6 +580,9 @@ function displayOptimalAction(
     amountPlayed,
     amountPlayedPerHour
 ) {
+    if (sweepsRemaining !== 0 && sweepsRemaining < 100) {
+        sweepsRemaining = -1;
+    }
     mainWindow.webContents.send('optimalAction', {
         optimalAction,
         dealerCard,
@@ -595,7 +606,7 @@ function getOptimalActionLuckyLand(gameState, strategyChart) {
             0,
             gameState.sweepsRemaining,
             gameState.amountPlayed,
-            amountPlayedPerHour 
+            amountPlayedPerHour
         );
     } else {
         const symbolToValue = {
@@ -636,12 +647,14 @@ function getOptimalActionLuckyLand(gameState, strategyChart) {
         // get the optimal strategy for the player's current hand against the dealer's face-up card
         strategy = strategyChart[dealerCard][playerKey];
 
-        // If strategy is 'Double else Stand' and player doesn't have exactly 2 cards, update strategy to Stand
+        // If strategy is 'Double else Stand' or 'Double' and player doesn't have exactly 2 cards, update strategy
         if (strategy === 'Ds' && playerHand.length !== 2) {
             strategy = 'S';
         } else if (strategy === 'Ds' && playerHand.length == 2) {
             strategy = 'D';
-        } else
+        } else if (strategy === 'D' && playerHand.length !== 2) {
+            strategy = 'H';
+        }
 
         // Always stand above 17
         if (
@@ -729,6 +742,7 @@ async function run() {
 
     const browser = await puppeteer.connect({
         browserWSEndpoint: webSocketDebuggerUrl,
+        defaultViewport: null,
     });
 
     log('connecting');
@@ -739,15 +753,21 @@ async function run() {
         throw new Error('Target page not found');
     }
 
-    // Fix the viewport resizing bug from Puppeteer by toggling it on and off
-    const client = await targetPage.target().createCDPSession();
-    await client.send('Emulation.setDeviceMetricsOverride', {
-        width: 800, 
-        height: 600,
-        deviceScaleFactor: 1,
-        mobile: true,
+    // Set the position of the Electron window
+    const windowWidth = await targetPage.evaluate(() => {
+        return window.outerWidth;
+      });    
+      
+    if (windowWidth) {
+        mainWindow.setSize(windowWidth, mainWindow.getBounds().height);
+    }
+    const windowPosition = await targetPage.evaluate(() => {
+        return {
+            x: window.screenX,
+            y: window.screenY + window.outerHeight
+        };
     });
-    await client.send('Emulation.clearDeviceMetricsOverride');
+    mainWindow.setPosition(windowPosition.x, windowPosition.y);
 
     targetPage.on('response', async (response) => {
         if (

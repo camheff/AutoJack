@@ -413,10 +413,13 @@ class GameState {
     }
 }
 
+app.disableHardwareAcceleration();
+
 function createWindow() {
     mainWindow = new BrowserWindow({
-        width: 600,
-        height: 600,
+        width: 800,
+        height: 200,
+        frame: process.env.LEGACY_MODE === 'true',
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -424,9 +427,11 @@ function createWindow() {
     });
 
     mainWindow.loadFile('Chumba.html');
+    mainWindow.webContents.on('did-finish-load', () => {
+        mainWindow.webContents.setZoomFactor(0.75);
+    });
 }
 
-app.disableHardwareAcceleration();
 app.whenReady().then(createWindow).then(run);
 
 app.on('window-all-closed', () => {
@@ -449,6 +454,9 @@ function displayOptimalAction(
     amountPlayed,
     amountPlayedPerHour
 ) {
+    if (sweepsRemaining !== 0 && sweepsRemaining < 100) {
+        sweepsRemaining = -1;
+    }
     mainWindow.webContents.send('optimalAction', {
         optimalAction,
         dealerCard,
@@ -518,7 +526,14 @@ function getOptimalAction(gameState, strategyChart) {
     } else {
         strategy = 'Repeat';
         const amountPlayedPerHour = gameState.getAmountPlayedPerHour();
-        displayOptimalAction(strategy, 0, 0, gameState.sweepsRemaining, gameState.amountPlayed, amountPlayedPerHour);
+        displayOptimalAction(
+            strategy,
+            0,
+            0,
+            gameState.sweepsRemaining,
+            gameState.amountPlayed,
+            amountPlayedPerHour
+        );
     }
     return strategy;
 }
@@ -589,6 +604,7 @@ async function run() {
 
     const browser = await puppeteer.connect({
         browserWSEndpoint: webSocketDebuggerUrl,
+        defaultViewport: null,
     });
 
     log('connecting');
@@ -599,15 +615,21 @@ async function run() {
         throw new Error('Target page not found');
     }
 
-    // Fix the viewport resizing bug from Puppeteer by toggling it on and off
-    const client = await targetPage.target().createCDPSession();
-    await client.send('Emulation.setDeviceMetricsOverride', {
-        width: 800, 
-        height: 600,
-        deviceScaleFactor: 1,
-        mobile: true,
-    });
-    await client.send('Emulation.clearDeviceMetricsOverride');
+        // Set the position of the Electron window
+        const windowWidth = await targetPage.evaluate(() => {
+            return window.outerWidth;
+          });    
+          
+        if (windowWidth) {
+            mainWindow.setSize(windowWidth, mainWindow.getBounds().height);
+        }
+        const windowPosition = await targetPage.evaluate(() => {
+            return {
+                x: window.screenX,
+                y: window.screenY + window.outerHeight
+            };
+        });
+        mainWindow.setPosition(windowPosition.x, windowPosition.y);    
 
     targetPage.on('response', async (response) => {
         // Chumba Requests
