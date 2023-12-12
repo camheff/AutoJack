@@ -8,14 +8,17 @@
     "start:ChadMode": "concurrently \"npm run start:chumba\" \"npm run start:luckyland\"",
     "start:luckyland:legacy": "cross-env LEGACY_MODE=true electron LuckyLand.js",
     "start:chumba:legacy": "cross-env LEGACY_MODE=true electron Chumba.js",
-    "start:ChadMode:legacy": "concurrently \"npm run start:chumba:legacy\" \"npm run start:luckyland:legacy\""
+    "start:ChadMode:legacy": "concurrently \"npm run start:chumba:legacy\" \"npm run start:luckyland:legacy\"",
+    "start:offerSpam": "node offerSpam.js"
   },
   "dependencies": {
     "axios": "^1.5.0",
     "chrome-remote-interface": "^0.33.0",
     "cross-env": "^7.0.3",
     "electron": "^26.2.1",
-    "puppeteer": "^21.2.1"
+    "ghost-cursor": "^1.1.19",
+    "puppeteer": "^21.2.1",
+    "puppeteer-extra": "^3.3.6"
   },
   "devDependencies": {
     "concurrently": "^8.2.1"
