@@ -2,37 +2,15 @@
 
 ![Gif Demo](https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExcXp4aHAyeGthcHJ1ZGMwNzIzMWp4eGEwaTc3YTZscDYzZTFhbnFkNyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3rxOqVKVTFYPIeP5wk/giphy-downsized-large.gif)
 
-## Updates in V4.0: 📢
-
--   Added New Mode **Pulsz OFFER SPAMMER\_** that automatically sets up your Skrill Multi-Tab's and then clicks purchase on all tabs simultaneously.
-    -   Currently tested up to 30 tabs, likely works on up to 60-70
-
-### To update your code, just run
-
-```bash
-git pull
-npm install
-```
-
--   To run the offerSpam mode, run:
-
-```bash
-npm run start:offerSpam
-```
-
--   To configure it:
-    -   To change the number of packages to buy, open offerSpam.js and see line 81. Change this value to the number of packages you want to buy MINUS one (so 29 buys 30 packages)
-
-```js
-let numberOfPackagesToBuy = 29;
-```
-
--   To set the correct package to buy:
-
-    -   See line 177. IF your offer is a pop up (that shows whenever you open pulsz.com/store) SET offerIsPopup equal to true;
-    -   IF your offer is NOT a popup, see line 186. Change the price inside those quotes to the price of the package you want. Currently its set to click the $23.99 package (the one I got).
-
--   IMPORTANT: This requires you to have Skrill linked to your Pulsz account and you MUST have Pulsz set as a trusted Merchant and your Device set as a trusted device. If you dont have this, just buy the $2 package and click the check box during checkout before running.
+## Quick Note:
+- The project is no longer actively maintained or updated **but** it still remains fully functional and undetected. Dozens of people have used this without issue. See the Installation Instructions below to get started.
+- After installation:
+    - Ensure you have space **below** your Chrome Window (that's where the UI will appear).
+    - Also ensure **after starting on Chumba**, you **double click your SC Balance** once so the program will know how much you need to play through. It will display "Done" when you finish.
+    - The offer spammer still works on Pulsz **only** for Skrill however it was only included as a quick addition so its relatively incomplete.
+- Tips:
+    - BTC: 3DP4kqweWydfaN1Xd3X7KuBu2dQNQvQPxE
+    - Eth: 0x7E5546922FEfE24171d7F6Aa8CcdE33922305F7f
 
 ## What is this? 🔍
 
@@ -43,48 +21,6 @@ let numberOfPackagesToBuy = 29;
 -   Yes, Automation Breaks TOS but **_this program is safe_**. Remote debugging is a feature built into chrome to help developers. Websites have **_no way_** of detecting it and even if they could, it's not a red flag.
 -   I have redeemed around **_$30k_** across both sites all while using this app with **_zero issues_**. As long as you don't do something stupid like set up a macro or auto clicker, there is zero risk of detection/ban (seriously, don't do that).
 -   The installation instructions might look scary if you're new to Open Source but I take you through it step by step. You don't need to know how to code. If you get lost, just ask a question in the chat and I or someone will help you.
-
-## Commands Reference: ⌨️
-
-### For a **_Single Site_**
-
-```bash
-npm run start:luckyland
-```
-
-or
-
-```bash
-npm run start:chumba
-```
-
-**_For both_**:
-
-```bash
-npm run start:ChadMode
-```
-
--   **_(IF YOU GET AN ERROR MESSAGE ABOUT GPU CACHE DONT WORRY, ITS NOT AN ISSUE)_**
-
-### (Run these from Command Prompt, not VS Code terminal)
-
-Useful to fix your chrome without restarting:
-
-```bash
-taskkill /f /im chrome.exe
-```
-
-Check to see if your Chrome Started Correctly:
-
-```bash
-netstat -an | find "9222"
-```
-
--   **_NOTE:_** X'ing out the application window might not stop the program, to stop it properly type in your VS Code Terminal:
-
-    -   **_Ctrl_** and **_C_**
-
--   Which will kill the process.
 
 ## For the Nerds 🤓
 
@@ -106,7 +42,7 @@ netstat -an | find "9222"
 
 -   You will need to download a code editor (I personally use VS Code, available here: [VS Code](https://code.visualstudio.com/))
 -   Install nodejs available here: [Node JS](https://nodejs.org/en)
--   When installing nodejs **_make sure to check "Automatically install the necessary tools. Note this will install Chocolatey..."_** on Windows. When the powershell stops doing stuff for a while you can X it out.
+-   When installing nodejs **_make sure to check "Automatically install the necessary tools. Note this will install Chocolatey..."_** on Windows. When the powershell terminal **shows Press Enter to Exit** you can X it out (DO NOT X it out prematurely, it can take up to 30 minutes and appear to be frozen).
 -   Install git, dont need to change anything from the default in the installer unless you know what your doing, available here: [Git For Windows](https://gitforwindows.org/)
 
 ### 2. Clone (download) this project
@@ -212,6 +148,81 @@ npm run start:ChadMode
 
 Since these are super minor quirks they arent on my radar to fix. The code is pretty rough with a lot of duplications. This is because it was initially designed only for Chumba but LuckyLand had a **_much_** different (shittier) process for how the game works with its state management and network requests and I was too lazy to make the code modular and efficient. Its not an enterprise app or a resume builder, the code does its job and I'm busy working on **_many other important automations that everyone in the group can take advantage of soon_**.
 
+## Commands Reference: ⌨️
+
+### For a **_Single Site_**
+
+```bash
+npm run start:luckyland
+```
+
+or
+
+```bash
+npm run start:chumba
+```
+
+**_For both_**:
+
+```bash
+npm run start:ChadMode
+```
+
+-   **_(IF YOU GET AN ERROR MESSAGE ABOUT GPU CACHE DONT WORRY, ITS NOT AN ISSUE)_**
+
+### (Run these from Command Prompt, not VS Code terminal)
+
+Useful to fix your chrome without restarting:
+
+```bash
+taskkill /f /im chrome.exe
+```
+
+Check to see if your Chrome Started Correctly:
+
+```bash
+netstat -an | find "9222"
+```
+
+-   **_NOTE:_** X'ing out the application window might not stop the program, to stop it properly type in your VS Code Terminal:
+
+    -   **_Ctrl_** and **_C_**
+
+-   Which will kill the process.
+
+## Updates in V4.0: 📢
+
+-   Added New Mode **Pulsz OFFER SPAMMER\_** that automatically sets up your Skrill Multi-Tab's and then clicks purchase on all tabs simultaneously.
+    -   Currently tested up to 30 tabs, likely works on up to 60-70
+
+### To update your code, just run
+
+```bash
+git pull
+npm install
+```
+
+-   To run the offerSpam mode, run:
+
+```bash
+npm run start:offerSpam
+```
+
+-   To configure it:
+    -   To change the number of packages to buy, open offerSpam.js and see line 81. Change this value to the number of packages you want to buy MINUS one (so 29 buys 30 packages)
+
+```js
+let numberOfPackagesToBuy = 29;
+```
+
+-   To set the correct package to buy:
+
+    -   See line 177. IF your offer is a pop up (that shows whenever you open pulsz.com/store) SET offerIsPopup equal to true;
+    -   IF your offer is NOT a popup, see line 186. Change the price inside those quotes to the price of the package you want. Currently its set to click the $23.99 package (the one I got).
+
+-   IMPORTANT: This requires you to have Skrill linked to your Pulsz account and you MUST have Pulsz set as a trusted Merchant and your Device set as a trusted device. If you dont have this, just buy the $2 package and click the check box during checkout before running.
+-    If you have a pack that you want to purchase but **it has the same price** as a normal package, you can change line 447 of offerSpam.js to: "let priceSelector = "(//button[normalize-space()='" + price + "'])[2]";" and it will now buy the second package with the specified price on the screen instead.
+
 ## FAQ ❓
 
 ### Are you going to make this fully automated for actually clicking the buttons too?
@@ -238,7 +249,7 @@ Since these are super minor quirks they arent on my radar to fix. The code is pr
 
 -   I dont see any point in adding this. Play through is slower than Purple and there is not an EV difference between playing multiple small hands versus playing one large hand, plus it has slightly worse RTP. **_Purple is Goated._**
 
-### If you've found any kind of bug, have trouble getting it running, or have an interesting idea to add to it let me know in discord Camheff (@tracer6136)
+### If you've found any kind of bug, have trouble getting it running, or have an interesting idea to add to it let me know on discord Camheff (Username to add me: tracer6136 )
 
 ## Sources For Tables 📜
 
@@ -249,18 +260,26 @@ Since these are super minor quirks they arent on my radar to fix. The code is pr
 ## Sponsorships/Donations 🤝
 
 -   This code is open source and 100% free for anyone to use, but it did take me a lot of effort and I spent a few weeks researching and working on the best way to implement something like this for everyone's benefit while I could have just been doing the 5% method during that time.
--   If you like the software, find it useful and want to show your appreciation the Sponsors button at the top of the Github page is the best way to do so and I would greatly appreciate any support.
--   Im not expecting to make anything off this besides what we win from the Casino's but any Sponsor money would help me in opening my SEP IRA's, and knowing theres people out there enjoy my work enough to be willing to sponsor it would really be a dream come true.
--   I will continue to try my best to continue provide anything useful I create to the group (like my **_Fully-automatic RSA Trade's Profit/Loss tracker_** for **_Google Sheets & Gmail_** coming out very soon).
+-   If you like the software, find it useful and want to show your appreciation the Sponsors button at the top of the Github page is the best way to do so and I would greatly appreciate any tips, otherwise my BTC/ETH addresses are below
+-   BTC: 3DP4kqweWydfaN1Xd3X7KuBu2dQNQvQPxE
+-   ETH: 0x7E5546922FEfE24171d7F6Aa8CcdE33922305F7f
 
 ## **_OmniTrader_** Early Access, the Automated RSA CLI 📈
 
--   Some of the Sponsorship tiers are also eligible to get **early access to an RSA CLI program** I've been working on called **_OmniTrader_**
-    -   An Application with the goal of **automating your RSA trading** so you can place your Buy's and Sell's accross **_ALL_** brokers with a **_single command_** (no more pulling over on the side of highways to get last minute trades in).
+-   My other major project currently in development, OmniTrader. A project that allows you to interact with your Brokerage Accounts through an easy to use CLI.
+    -   The project allows you to **automate your RSA trading** so you can place hundreds of Buy and Sell orders accross **_ALL_** your seperate brokerage accounts with a **_single command_**. No more pulling over on the side of highways to get last minute trades in or fumbling with clunky Brokerage UI's repeating the same orders over and over again spending hours each day. This will cut the time it takes to place **all** your trades down to a **few minutes**.
     -   Currently it supports:
         -   TastyTrade
         -   Tradier
         -   Wells Fargo
         -   Vanguard
-        -   Public
+        -   Ally
+        -   Fidelity
+        -   Chase
+        -   Firstrade
+        -   Robinhood
+        -   TRowe Price
+        -   Truist
+        -   Schwab
     -   And more coming very soon. Its currently an active work in progress and I plan to add just about every broker used for RSA to the Project starting with the slowest and most annoying brokers to trade on being focused first.
+    -   Private Access is on Pre-Sale now, reach me on Discord ( tracer6136 ) for more details
