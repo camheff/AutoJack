@@ -264,10 +264,10 @@ let numberOfPackagesToBuy = 29;
 -   BTC: 3DP4kqweWydfaN1Xd3X7KuBu2dQNQvQPxE
 -   ETH: 0x7E5546922FEfE24171d7F6Aa8CcdE33922305F7f
 
-## **_OmniTrader_** Early Access, the Automated RSA CLI 📈
+## **_OmniTrader_** Early Access, the Automated Trading CLI 📈
 
 -   My other major project currently in development, OmniTrader. A project that allows you to interact with your Brokerage Accounts through an easy to use CLI.
-    -   The project allows you to **automate your RSA trading** so you can place hundreds of Buy and Sell orders accross **_ALL_** your seperate brokerage accounts with a **_single command_**. No more pulling over on the side of highways to get last minute trades in or fumbling with clunky Brokerage UI's repeating the same orders over and over again spending hours each day. This will cut the time it takes to place **all** your trades down to a **few minutes**.
+    -   The project allows you to **automate your trading** so you can place hundreds of Buy and Sell orders accross **_ALL_** your seperate brokerage accounts with a **_single command_**. No more pulling over on the side of highways to get last minute trades in or fumbling with clunky Brokerage UI's repeating the same orders over and over again spending hours each day. This will cut the time it takes to place **all** your trades down to a **few minutes**.
     -   Currently it supports:
         -   TastyTrade
         -   Tradier
@@ -281,5 +281,5 @@ let numberOfPackagesToBuy = 29;
         -   TRowe Price
         -   Truist
         -   Schwab
-    -   And more coming very soon. Its currently an active work in progress and I plan to add just about every broker used for RSA to the Project starting with the slowest and most annoying brokers to trade on being focused first.
+    -   And more coming very soon. Its currently an active work in progress and I plan to add support for just about every major broker starting with the slowest and most annoying to trade on.
     -   Private Access is on Pre-Sale now, reach me on Discord ( tracer6136 ) for more details
