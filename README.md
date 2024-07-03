@@ -249,7 +249,7 @@ let numberOfPackagesToBuy = 29;
 
 -   I dont see any point in adding this. Play through is slower than Purple and there is not an EV difference between playing multiple small hands versus playing one large hand, plus it has slightly worse RTP. **_Purple is Goated._**
 
-### If you've found any kind of bug, have trouble getting it running, or have an interesting idea to add to it let me know on discord Camheff (Username to add me: tracer6136 )
+### If you've found any kind of bug, have trouble getting it running, or have an interesting idea to add to it let me know on discord Camheff (Username to add me: omni_soft )
 
 ## Sources For Tables 📜
 
@@ -282,4 +282,4 @@ let numberOfPackagesToBuy = 29;
         -   Truist
         -   Schwab
     -   And more coming very soon. Its currently an active work in progress and I plan to add support for just about every major broker starting with the slowest and most annoying to trade on.
-    -   Private Access is on Pre-Sale now, reach me on Discord ( tracer6136 ) for more details
+    -   Private Access is on Pre-Sale now, reach me on Discord ( omni_soft ) for more details
