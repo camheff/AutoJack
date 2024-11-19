@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer');
+const playwright = require('playwright');
 const axios = require('axios');
 const { app, BrowserWindow } = require('electron');
 const { enableLogging, log } = require('./logger');
@@ -602,10 +603,14 @@ async function run() {
     const response = await axios.get('http://127.0.0.1:9222/json/version');
     const webSocketDebuggerUrl = response.data.webSocketDebuggerUrl;
 
-    const browser = await puppeteer.connect({
-        browserWSEndpoint: webSocketDebuggerUrl,
-        defaultViewport: null,
-    });
+    // const browser = await puppeteer.connect({
+    //     browserWSEndpoint: webSocketDebuggerUrl,
+    //     defaultViewport: null,
+    // });
+    const browserChrome = await playwright.chromium.connectOverCDP(
+        webSocketDebuggerUrl
+    );
+    const browser = await browserChrome.contexts()[0];
 
     log('connecting');
     const pages = await browser.pages();
@@ -615,21 +620,21 @@ async function run() {
         throw new Error('Target page not found');
     }
 
-        // Set the position of the Electron window
-        const windowWidth = await targetPage.evaluate(() => {
-            return window.outerWidth;
-          });    
-          
-        if (windowWidth) {
-            mainWindow.setSize(windowWidth, mainWindow.getBounds().height);
-        }
-        const windowPosition = await targetPage.evaluate(() => {
-            return {
-                x: window.screenX,
-                y: window.screenY + window.outerHeight
-            };
-        });
-        mainWindow.setPosition(windowPosition.x, windowPosition.y);    
+    // Set the position of the Electron window
+    const windowWidth = await targetPage.evaluate(() => {
+        return window.outerWidth;
+    });
+
+    if (windowWidth) {
+        mainWindow.setSize(windowWidth, mainWindow.getBounds().height);
+    }
+    const windowPosition = await targetPage.evaluate(() => {
+        return {
+            x: window.screenX,
+            y: window.screenY + window.outerHeight,
+        };
+    });
+    mainWindow.setPosition(windowPosition.x, windowPosition.y);
 
     targetPage.on('response', async (response) => {
         // Chumba Requests
@@ -660,6 +665,14 @@ async function run() {
                 log('Restoring gamestate.playerHands');
                 gameState.playerHands.forEach((hand) => log(hand));
             }
+        } else if (
+            response.url().includes('blackjack') &&
+            response.url().includes('play.chumbacasino.com') &&
+            response.request().resourceType() === 'xhr'
+        ) {
+            log('Chumba Response:', response.url());
+            const text = await response.text();
+            log('Chumba Response Body:', text);
         }
         if (
             response
