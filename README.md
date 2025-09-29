@@ -7,7 +7,6 @@
 - After installation:
     - Ensure you have space **below** your Chrome Window (that's where the UI will appear).
     - Also ensure **after starting on Chumba**, you **double click your SC Balance** once so the program will know how much you need to play through. It will display "Done" when you finish.
-    - The offer spammer still works on Pulsz **only** for Skrill however it was only included as a quick addition so its relatively incomplete.
 - Tips:
     - BTC: 3DP4kqweWydfaN1Xd3X7KuBu2dQNQvQPxE
     - Eth: 0x7E5546922FEfE24171d7F6Aa8CcdE33922305F7f
@@ -79,9 +78,21 @@ So it should look something like:
 "C:\Program Files\Google\Chrome\Application\chrome_dev.exe" --remote-debugging-port=9222
 ```
 
+-   UPDATE: Due to Chrome constantly updating & breaking old functionality, you now have to update your shortcut a bit more. You need to explicitly define a User Data Dir, for most you just need to add this to the end of the target field with your correct username:
+
+```bash
+ --user-data-dir="C:\Users\YOUR_USERNAME_HERE\AppData\Local\Google\Chrome\User Data\Default"
+```
+
+-   Making the entire value of target something like this (Be sure to mind spaces and quotes)
+  
+```bash
+"C:\Program Files\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222 --user-data-dir="C:\Users\heffe\AppData\Local\Google\Chrome\User Data\Default"
+```
+
 -   You will probably need to either turn off your Firewall or add an exception for this Chrome in your firewall rules, otherwise it will **_probably block the remote debugger_**.
 
-To ensure this is working, launch the Chrome with this short cut, and open a command prompt (search command prompt in the Windows Start Menu) then run
+To ensure this is working, **_close out ALL of your Google Chrome windows_** then launch the Chrome with this short cut, and open a command prompt (search command prompt in the Windows Start Menu) then run
 
 ```bash
 netstat -an | find "9222"
@@ -99,10 +110,10 @@ TCP 127.0.0.1:9222 0.0.0.0:0 LISTENING
 taskkill /f /im chrome.exe
 ```
 
--   Then try opening chrome from your shortcut again, or try restarting your PC and make sure you launch the Chrome shortcut with remote debugging **_before_** a regular Chrome instance.
+-   Then try opening chrome from your shortcut again, or try restarting your PC and make sure you launch the Chrome shortcut with remote debugging **_before_** a regular Chrome instance. Chrome must be launched from this shortcut first for the debugger to be enabled.
 -   If you see LISTENING your Chrome is setup correctly.
 
-    -   If you dont want to make a shortcut, or this doesn't make any sense, you could alternatively try launching it like this [Youtube Video](https://www.youtube.com/watch?v=LEJX645aeFU&t=3s&ab_channel=AutoTest)
+    -   If you dont want to make a shortcut, or if this doesn't make any sense, you could alternatively try launching it like this [Youtube Video](https://www.youtube.com/watch?v=LEJX645aeFU&t=3s&ab_channel=AutoTest)
 
 ### 5. Running it
 
@@ -190,39 +201,6 @@ netstat -an | find "9222"
 
 -   Which will kill the process.
 
-## Updates in V4.0: 📢
-
--   Added New Mode **Pulsz OFFER SPAMMER\_** that automatically sets up your Skrill Multi-Tab's and then clicks purchase on all tabs simultaneously.
-    -   Currently tested up to 30 tabs, likely works on up to 60-70
-
-### To update your code, just run
-
-```bash
-git pull
-npm install
-```
-
--   To run the offerSpam mode, run:
-
-```bash
-npm run start:offerSpam
-```
-
--   To configure it:
-    -   To change the number of packages to buy, open offerSpam.js and see line 81. Change this value to the number of packages you want to buy MINUS one (so 29 buys 30 packages)
-
-```js
-let numberOfPackagesToBuy = 29;
-```
-
--   To set the correct package to buy:
-
-    -   See line 177. IF your offer is a pop up (that shows whenever you open pulsz.com/store) SET offerIsPopup equal to true;
-    -   IF your offer is NOT a popup, see line 186. Change the price inside those quotes to the price of the package you want. Currently its set to click the $23.99 package (the one I got).
-
--   IMPORTANT: This requires you to have Skrill linked to your Pulsz account and you MUST have Pulsz set as a trusted Merchant and your Device set as a trusted device. If you dont have this, just buy the $2 package and click the check box during checkout before running.
--    If you have a pack that you want to purchase but **it has the same price** as a normal package, you can change line 447 of offerSpam.js to: "let priceSelector = "(//button[normalize-space()='" + price + "'])[2]";" and it will now buy the second package with the specified price on the screen instead.
-
 ## FAQ ❓
 
 ### Are you going to make this fully automated for actually clicking the buttons too?
@@ -263,23 +241,3 @@ let numberOfPackagesToBuy = 29;
 -   If you like the software, find it useful and want to show your appreciation the Sponsors button at the top of the Github page is the best way to do so and I would greatly appreciate any tips, otherwise my BTC/ETH addresses are below
 -   BTC: 3DP4kqweWydfaN1Xd3X7KuBu2dQNQvQPxE
 -   ETH: 0x7E5546922FEfE24171d7F6Aa8CcdE33922305F7f
-
-## **_OmniTrader_** Early Access, the Automated Trading CLI 📈
-
--   My other major project currently in development, OmniTrader. A project that allows you to interact with your Brokerage Accounts through an easy to use CLI.
-    -   The project allows you to **automate your trading** so you can place hundreds of Buy and Sell orders accross **_ALL_** your seperate brokerage accounts with a **_single command_**. No more pulling over on the side of highways to get last minute trades in or fumbling with clunky Brokerage UI's repeating the same orders over and over again spending hours each day. This will cut the time it takes to place **all** your trades down to a **few minutes**.
-    -   Currently it supports:
-        -   TastyTrade
-        -   Tradier
-        -   Wells Fargo
-        -   Vanguard
-        -   Ally
-        -   Fidelity
-        -   Chase
-        -   Firstrade
-        -   Robinhood
-        -   TRowe Price
-        -   Truist
-        -   Schwab
-    -   And more coming very soon. Its currently an active work in progress and I plan to add support for just about every major broker starting with the slowest and most annoying to trade on.
-    -   Private Access is on Pre-Sale now, reach me on Discord ( omni_soft ) for more details
